@@ -183,7 +183,7 @@ The model training consists in teaching the machine learning algorithm to make p
 
 The training and validation curves through epochs is shown below:
 
-![Training and Validation Curves](training.png)
+![Training and Validation Curves](losses.png)
 
 ### 4. Model Evaluation
 The following metrics were used to assess the performance of the logistic regression model:
@@ -208,7 +208,7 @@ The results are shown in the next session.
 
 The confusion matrix is shown below:
 
-![Confusion Matrix](confusion_matrix.png)
+![Confusion Matrix](probability_line.png)
 
 ---
 
