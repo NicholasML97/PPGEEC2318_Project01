@@ -63,6 +63,17 @@ This is a **balanced** binary classification problem with approximately 48% `0` 
 
 ---
 
+## Model Details
+
+- **Type**: Binary logistic regression
+- **Framework**: PyTorch
+- **Date**: 2025
+- **Training Algorithm**: Stochastic Gradient Descent
+- **Batch Size**: 64
+- **Citation**: Dataset and model referenced from Kaggle and UFRN academic course project
+
+---
+
 ## Pipeline Overview
 
 ### 1. Extract, Transform and Load (ETL)
@@ -91,6 +102,8 @@ df = pd.read_csv(csv_file)
 ````
 
 #### 1.2 Exploratory Data Analysis (EDA)
+This substep consists in analyzing and visualizing the dataset to summarize their main characteristics, detect patterns, spot anomalies, test assumptions, and check data quality before applying the machine learning model. For the Customer Purchase dataset, we did the following:
+
 - Displayng the variable types of the data set
  ```python
 df.info()
@@ -129,13 +142,39 @@ df[numerical_features].apply(lambda x: mutual_info_score(x, df.purchasestatus)).
 ```
 
 #### 1.3 Preprocessing
-Based on the EDA, we decided to drop two features of the dataset which didn't seem to impact the target variable: `Gender` and `ProductCategory`.
-### 2. Exploratory Data Analysis
+Preprocessing in a machine learning pipeline involves transforming raw data into a clean and suitable format for modeling. Based on the EDA, we saw that the dataset is well organized and balanced, without missing values. So, the only preprocessing we decided to do was to drop two features of the dataset which didn't seem to impact the target variable: `Gender` and `ProductCategory`.
+```python
+# Remove chosen columns from the dataset
+columns_to_drop = ['gender', "productcategory"]
+```
+
+### 2. Data Preparation
+The data preparationg step consists in organizing and formatting raw data to make it suitable for the machine learning task. In this project, we did the following:
+
+- Split Dataset (Training/Validation)
 
 ### 2. Data Preparation
 
 - Split Dataset (Training/Validation)
-- One-hot encoding of categorical variables
+ ```python
+# Ratio used to split train and validation data
+val_size = 0.20
+
+# Seed used to reproduce purposes
+seed = 41
+
+# Reference (column) to stratify the data
+stratify = "purchasestatus"
+
+# Split-out train/validation dataset
+x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1),
+                                                  df[stratify],
+                                                  test_size=val_size,
+                                                  random_state=seed,
+                                                  shuffle=True,
+                                                  stratify=df[stratify])
+ ```
+- Target Variable Encoding
 - Train/test split (70/15/15)
 
 ### 3. Model Training
@@ -151,17 +190,6 @@ Based on the EDA, we decided to drop two features of the dataset which didn't se
 - **ROC AUC Score**
 - Confusion matrix
 - Probability distributions for each class
-
----
-
-## Model Details
-
-- **Type**: Binary logistic regression
-- **Framework**: PyTorch
-- **Date**: 2025
-- **Training Algorithm**: SGD with Adam optimizer
-- **License**: MIT
-- **Citation**: Dataset and model referenced from Kaggle and UFRN academic course project
 
 ---
 
