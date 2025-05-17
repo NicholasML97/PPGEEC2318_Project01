@@ -7,7 +7,7 @@ In this project, we build a **binary classification model** using **PyTorch** to
 > Leandro Roberto Silva Farias – 20251011748  
 > Nicholas Medeiros Lopes – 20251011739
 
-The complete pipeline includes fetching data, exploratory data analysis, preprocessing, data preparating, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
+The complete pipeline includes fetching data, exploratory data analysis, preprocessing, data preparation, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
 
 ![Project's Pipeline](pipeline.png)
 ---
@@ -80,7 +80,7 @@ This is a **balanced** binary classification problem with approximately 48% `0` 
 The first step of the pipeline is to extract, transform and load the data. This is divided in the following substeps:
 
 #### 1.1 Fetch data
-Here, we extract the data from the kaggle website using the following commands
+Here, we extract the data from the kaggle website using the following commands:
 
 ```python
 # Download latest version of the dataset
@@ -94,7 +94,7 @@ print(os.listdir(path))
 csv_file = os.path.join(path, 'customer_purchase_data.csv')
 ```
 
-Then, the dataset is stores in a Pandas `Dataframe` variable.
+Then, the dataset is stored in a Pandas `Dataframe` variable.
 
 ```python
 # Load into Pandas
@@ -104,7 +104,7 @@ df = pd.read_csv(csv_file)
 #### 1.2 Exploratory Data Analysis (EDA)
 This substep consists in analyzing and visualizing the dataset to summarize their main characteristics, detect patterns, spot anomalies, test assumptions, and check data quality before applying the machine learning model. For the Customer Purchase dataset, we did the following:
 
-- Displayng the variable types of the data set
+- Display the variable types of the data set
  ```python
 df.info()
 ```
@@ -113,7 +113,7 @@ df.info()
 df.isnull().sum()
 ```
 
-- Separating the categorical and numerical features
+- Separate the categorical and numerical features
 ```python
 categorical_features = ['gender', 'productcategory', 'loyaltyprogram', 'purchasestatus']
 numerical_features = [col for col in df.columns if col not in categorical_features]
