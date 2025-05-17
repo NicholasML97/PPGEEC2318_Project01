@@ -7,29 +7,46 @@ In this project, we build a **binary classification model** using **PyTorch** to
 > Leandro Roberto Silva Farias – 20251011748  
 > Nicholas Medeiros Lopes – 20251011739
 
-The complete pipeline includes exploratory analysis, preprocessing, model training, evaluation, and reporting.
+The complete pipeline includes exploratory analysis, preprocessing, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
 
 ---
 
 ## Environment Setup
 
-Use the following to configure your environment:
+The following libraries are required to run the code:
 
-```bash
-pip install -r requirements.txt
-```
+```python
+# Fetch data
+import kagglehub
+import os
 
-To run the notebook:
+# Data storing and analysis 
+import pandas as pd
+import numpy as np
 
-```bash
-jupyter notebook
+# Data visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Data preprocessing and preparation
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score, accuracy_score, mutual_info_score, confusion_matrix
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+
+# Model training
+import torch
+from torch.utils.data import Dataset, TensorDataset, DataLoader, WeightedRandomSampler, SubsetRandomSampler
+from torch.utils.data.dataset import random_split
+import torch.optim as optim
+import torch.nn as nn
 ```
 
 ---
 
 ## Dataset Description
 
-We use the **Customer Purchase Behavior** dataset from [Kaggle](https://www.kaggle.com/datasets/rabieelkharoua/predict-customer-purchase-behavior-dataset), which includes:
+We use the **Customer Purchase Behavior** dataset from [Kaggle](https://www.kaggle.com/datasets/rabieelkharoua/predict-customer-purchase-behavior-dataset), which includes the following features:
 
 - `Age`
 - `Gender` (0 = Male, 1 = Female)
