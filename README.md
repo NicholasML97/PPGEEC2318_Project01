@@ -171,10 +171,51 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
                                                   stratify=df[stratify])
  ```
 - Target Variable Encoding
-- Independent variable enconding (numerical and categorical)
+ ```python
+ # Apply mapping to both train and validation sets
+ y_train = y_train.map({'no': 0, 'yes': 1})
+ y_val = y_val.map({'no': 0, 'yes': 1})
+ 
+ # Check that encoding is correct
+ print("Classes [0, 1] correspond to: {0}".format(['no', 'yes']))
+ print("y_train unique values:", y_train.unique())
+ print("y_val unique values:", y_val.unique())
+ ```
+  
+- Independent variable enconding (categorical)
+ ```python
+ # One-hot encode object columns
+ for name in x_train.select_dtypes("object").columns:
+     onehot = OneHotEncoder(sparse_output=False, drop="first")
+ 
+     # Fit encoder on training data
+     onehot.fit(x_train[[name]])
+ 
+     # Transform and assign back
+     x_train[onehot.get_feature_names_out([name])] = onehot.transform(x_train[[name]])
+     x_val[onehot.get_feature_names_out([name])] = onehot.transform(x_val[[name]])
+ 
+ # Drop original categorical columns (after encoding)
+ cols_to_drop = ['loyaltyprogram']
+ x_train.drop(columns=cols_to_drop, inplace=True)
+ x_val.drop(columns=cols_to_drop, inplace=True)
+ ```
+
+- - Independent variable enconding (numerical)
+ ```python
+ scaler = StandardScaler()
+ 
+ # Fit on training data
+ x_train[['age', 'annualincome', 'timespentonwebsite', 'discountsavailed']] = scaler.fit_transform(x_train[['age', 'annualincome', 'timespentonwebsite', 'discountsavailed']])
+ 
+ # Apply transformation on validation data
+ x_val[['age','annualincome', 'timespentonwebsite', 'discountsavailed']] = scaler.transform(x_val[['age', 'annualincome', 'timespentonwebsite', 'discountsavailed']])
+ ```
 
 ### 3. Model Training
-The model training consists in teaching the machine learning algorithm to make predictions by learning patterns from labeled data. We used the following features for our training
+The model training consists in teaching the machine learning algorithm to make predictions by learning patterns from labeled data. 
+
+We used the following features for our training
 
 - **Logistic Regression Model** implemented with PyTorch
 - Loss function: Binary Cross Entropy
