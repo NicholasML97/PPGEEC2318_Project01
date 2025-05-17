@@ -186,10 +186,22 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
 
 ### 4. Model Evaluation
 
+- **Precision**
+- **Recall**
 - **Accuracy**
-- **ROC AUC Score**
 - Confusion matrix
 - Probability distributions for each class
+
+---
+
+## Model Details
+
+- **Type**: Binary logistic regression
+- **Framework**: PyTorch
+- **Date**: 2025
+- **Training Algorithm**: SGD with Adam optimizer
+- **License**: MIT
+- **Citation**: Dataset and model referenced from Kaggle and UFRN academic course project
 
 ---
 
@@ -197,8 +209,9 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
 
 | Metric         | Value     |
 |----------------|-----------|
-| Accuracy       | ~0.81     |
-| ROC AUC Score  | ~0.88     |
+| Precision      | ~0.84259  |
+| Recall         | ~0.7      |
+| Accuracy       | ~0.81333  |
 
 > Threshold for classification set at 0.5.
 
