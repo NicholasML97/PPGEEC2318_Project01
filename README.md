@@ -9,7 +9,7 @@ In this project, we build a **binary classification model** using **PyTorch** to
 
 The complete pipeline includes fetching data, exploratory data analysis, preprocessing, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
 
-![Project's Pipeline](Sem titulo.png)
+![Project's Pipeline](Sem título.png)
 ---
 
 ## Environment Setup
