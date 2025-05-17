@@ -201,7 +201,7 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
  x_val.drop(columns=cols_to_drop, inplace=True)
  ```
 
-- - Independent variable enconding (numerical)
+- Independent variable enconding (numerical)
  ```python
  scaler = StandardScaler()
  
