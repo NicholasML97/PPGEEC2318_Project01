@@ -7,7 +7,7 @@ In this project, we build a **binary classification model** using **PyTorch** to
 > Leandro Roberto Silva Farias – 20251011748  
 > Nicholas Medeiros Lopes – 20251011739
 
-The complete pipeline includes fetching data, exploratory data analysis, preprocessing, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
+The complete pipeline includes fetching data, exploratory data analysis, preprocessing, data preparating, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
 
 ![Project's Pipeline](pipeline.png)
 ---
@@ -65,8 +65,11 @@ This is a **balanced** binary classification problem with approximately 48% `0` 
 
 ## Pipeline Overview
 
-### 1. Fetch Data
-The first step consists on fetching the data from the Kaggle website.
+### 1. Extract, Transform and Load (ETL)
+The first step of the pipeline is to extract, transform and load the data. This is divided in the following substeps:
+
+#### 1.1 Fetch data
+Here, we extract the data from the kaggle website using the following commands
 
 ```python
 # Download latest version of the dataset
@@ -87,16 +90,51 @@ Then, the dataset is stores in a Pandas `Dataframe` variable.
 df = pd.read_csv(csv_file)
 ````
 
+#### 1.2 Exploratory Data Analysis (EDA)
+- Displayng the variable types of the data set
+ ```python
+df.info()
+```
+- Check if there are missing values
+```python
+df.isnull().sum()
+```
+
+- Separating the categorical and numerical features
+```python
+categorical_features = ['gender', 'productcategory', 'loyaltyprogram', 'purchasestatus']
+numerical_features = [col for col in df.columns if col not in categorical_features]
+```
+
+- Check data distribution
+```python
+for col in numerical_features:
+    sns.histplot(df[col], kde=True) # Draw a histogram, use KDE to smooth data distribution
+    plt.title(col)
+    plt.show()
+```
+
+```python
+for col in categorical_features:
+    print(f'Column: {col}, Unique values: {df[col].nunique()}')
+    sns.countplot(x=col, data=df)
+    plt.title(col)
+    plt.show()
+```
+
+- Check correlation between the features and the target variable
+```python
+df[categorical_features].apply(lambda x: mutual_info_score(x, df.purchasestatus)).sort_values()
+df[numerical_features].apply(lambda x: mutual_info_score(x, df.purchasestatus)).sort_values()
+```
+
+#### 1.3 Preprocessing
+Based on the EDA, we decided to drop two features of the dataset which didn't seem to impact the target variable: `Gender` and `ProductCategory`.
 ### 2. Exploratory Data Analysis
 
-- Basic statistics
-- Correlation heatmaps
-- Purchase rate by category and gender
-- Class balance check
+### 2. Data Preparation
 
-### 2. Preprocessing
-
-- Standardization of numerical features
+- Split Dataset (Training/Validation)
 - One-hot encoding of categorical variables
 - Train/test split (70/15/15)
 
