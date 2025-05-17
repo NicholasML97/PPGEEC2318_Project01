@@ -7,7 +7,7 @@ In this project, we build a **binary classification model** using **PyTorch** to
 > Leandro Roberto Silva Farias – 20251011748  
 > Nicholas Medeiros Lopes – 20251011739
 
-The complete pipeline includes exploratory analysis, preprocessing, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
+The complete pipeline includes fetching data, exploratory data analysis, preprocessing, model training, evaluation, and reporting. The complete pipeline is contained in the `notebook.ipynb` file.
 
 ---
 
@@ -64,7 +64,29 @@ This is a **balanced** binary classification problem with approximately 48% `0` 
 
 ## Pipeline Overview
 
-### 1. Exploratory Data Analysis
+### 1. Fetch Data
+The first step consists on fetching the data from the Kaggle website.
+
+```python
+# Download latest version of the dataset
+path = kagglehub.dataset_download("rabieelkharoua/predict-customer-purchase-behavior-dataset")
+print("Path to dataset files:", path)
+
+# List files in the downloaded directory to find the CSV name
+print(os.listdir(path))
+
+# Load the CSV file (assuming it's named 'Admission_Predict.csv')
+csv_file = os.path.join(path, 'customer_purchase_data.csv')
+```
+
+Then, the dataset is stores in a Pandas `Dataframe` variable.
+
+```python
+# Load into Pandas
+df = pd.read_csv(csv_file)
+````
+
+### 2. Exploratory Data Analysis
 
 - Basic statistics
 - Correlation heatmaps
