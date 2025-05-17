@@ -151,11 +151,7 @@ columns_to_drop = ['gender', "productcategory"]
 ### 2. Data Preparation
 The data preparationg step consists in organizing and formatting raw data to make it suitable for the machine learning task. In this project, we did the following:
 
-- Split Dataset (Training/Validation)
-
-### 2. Data Preparation
-
-- Split Dataset (Training/Validation)
+- Split Dataset (Training/Validation): We used a classical 80/20 split, due to the small size of the dataset
  ```python
 # Ratio used to split train and validation data
 val_size = 0.20
@@ -175,33 +171,28 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
                                                   stratify=df[stratify])
  ```
 - Target Variable Encoding
-- Train/test split (70/15/15)
+- Independent variable enconding (numerical and categorical)
 
 ### 3. Model Training
+The model training consists in teaching the machine learning algorithm to make predictions by learning patterns from labeled data. We used the following features for our training
 
 - **Logistic Regression Model** implemented with PyTorch
 - Loss function: Binary Cross Entropy
-- Optimizer: Adam
-- Batch training with DataLoader
+- Optimizer: Stochastic Gradient Descent
+- Epochs: 500
+
+The training and validation curves through epochs is shown below:
+
+![Training and Validation Curves](training.png)
 
 ### 4. Model Evaluation
-
+The following metrics were used to assess the performance of the logistic regression model:
 - **Precision**
 - **Recall**
 - **Accuracy**
 - Confusion matrix
-- Probability distributions for each class
 
----
-
-## Model Details
-
-- **Type**: Binary logistic regression
-- **Framework**: PyTorch
-- **Date**: 2025
-- **Training Algorithm**: SGD with Adam optimizer
-- **License**: MIT
-- **Citation**: Dataset and model referenced from Kaggle and UFRN academic course project
+The results are shown in the next session.
 
 ---
 
@@ -215,6 +206,10 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
 
 > Threshold for classification set at 0.5.
 
+The confusion matrix is shown below:
+
+![Confusion Matrix](confusion_matrix.png)
+
 ---
 
 ## Intended Use
@@ -227,25 +222,6 @@ x_train, x_val, y_train, y_val = train_test_split(df.drop(labels=stratify,axis=1
 ## Ethical Considerations
 
 - Dataset is synthetic: No real user data involved.
-- No fairness analysis included.
-- No bias mitigation strategies applied.
-
----
-
-## Caveats and Recommendations
-
-- Do not apply this model to real-world data without retraining and thorough testing.
-- Consider additional features like time-series behavior, clickstream, or device metadata for better real-world performance.
-- Explore fairness and interpretability tools for further development.
-
----
-
-## Future Work
-
-- Add model versioning using DVC.
-- Deploy model using FastAPI.
-- Add CI/CD with GitHub Actions.
-- Test other classification models (e.g., Random Forest, XGBoost).
 
 ---
 
